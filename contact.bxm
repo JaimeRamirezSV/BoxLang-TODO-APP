@@ -34,7 +34,7 @@
             line-height: 1.6;
         }
         .site-header {
-            background: linear-gradient(135deg, var(--primary) 0%%, ##7c3aed 100%%);
+            background: ##4e9167;
             color: white; padding: 2.5rem 2rem 2rem;
             box-shadow: var(--shadow-md);
         }
@@ -68,7 +68,7 @@
         .form-group input[type="text"],
         .form-group input[type="email"],
         .form-group textarea {
-            width: 100%%; padding: 0.6rem 0.75rem;
+            width: 100%; padding: 0.6rem 0.75rem;
             border: 1px solid var(--gray-300); border-radius: var(--radius);
             font-size: 0.9rem; color: var(--gray-800); background: white;
             transition: border-color 0.15s, box-shadow 0.15s; outline: none;

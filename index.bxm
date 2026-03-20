@@ -43,7 +43,7 @@
 
         /* Header */
         .site-header {
-            background: linear-gradient(135deg, var(--primary) 0%%, ##7c3aed 100%%);
+            background: ##4e9167;
             color: white;
             padding: 2.5rem 2rem 2rem;
             box-shadow: var(--shadow-md);
@@ -128,7 +128,7 @@
         .form-group input[type="email"],
         .form-group textarea,
         .form-group select {
-            width: 100%%;
+            width: 100%;
             padding: 0.6rem 0.75rem;
             border: 1px solid var(--gray-300);
             border-radius: var(--radius);
@@ -220,7 +220,7 @@
         .counter-btn {
             width: 2.5rem;
             height: 2.5rem;
-            border-radius: 50%%;
+            border-radius: 50%;
             font-size: 1.25rem;
             font-weight: 600;
             display: inline-flex;
@@ -239,7 +239,7 @@
         }
 
         /* Table */
-        .data-table { width: 100%%; border-collapse: collapse; margin-top: 0.5rem; }
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
         .data-table th {
             text-align: left;
             padding: 0.65rem 0.85rem;
