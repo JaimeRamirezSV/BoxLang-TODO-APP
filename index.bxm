@@ -370,9 +370,9 @@
     <!-- Navigation -->
     <nav class="site-nav" id="main-nav">
         <div class="container">
-            <a href="/" id="nav-home" class="active">Home</a>
-            <a href="/about" id="nav-about">About</a>
-            <a href="/contact" id="nav-contact">Contact</a>
+            <a href="/index.bxm" id="nav-home" class="active">Home</a>
+            <a href="/about.bxm" id="nav-about">About</a>
+            <a href="/contact.bxm" id="nav-contact">Contact</a>
         </div>
     </nav>
 

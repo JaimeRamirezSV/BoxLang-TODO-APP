@@ -1,0 +1,185 @@
+
+<bx:output>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - BoxLang Test Page</title>
+    <style>
+        :root {
+            --primary: ##2563eb;
+            --primary-hover: ##1d4ed8;
+            --success: ##16a34a;
+            --success-bg: ##dcfce7;
+            --gray-50: ##f9fafb;
+            --gray-100: ##f3f4f6;
+            --gray-200: ##e5e7eb;
+            --gray-300: ##d1d5db;
+            --gray-400: ##9ca3af;
+            --gray-500: ##6b7280;
+            --gray-700: ##374151;
+            --gray-800: ##1f2937;
+            --gray-900: ##111827;
+            --radius: 8px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0; padding: 0;
+            background: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+        .site-header {
+            background: linear-gradient(135deg, var(--primary) 0%%, ##7c3aed 100%%);
+            color: white; padding: 2.5rem 2rem 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        .site-header .container { max-width: 960px; margin: 0 auto; }
+        .site-header h1 { margin: 0 0 0.25rem; font-size: 1.75rem; font-weight: 700; letter-spacing: -0.025em; }
+        .site-header p { margin: 0; opacity: 0.85; font-size: 1.05rem; }
+        .site-nav {
+            background: white; border-bottom: 1px solid var(--gray-200);
+            position: sticky; top: 0; z-index: 10; box-shadow: var(--shadow-sm);
+        }
+        .site-nav .container { max-width: 960px; margin: 0 auto; display: flex; gap: 0; }
+        .site-nav a {
+            display: inline-block; padding: 0.85rem 1.25rem; color: var(--gray-500);
+            text-decoration: none; font-size: 0.9rem; font-weight: 500;
+            border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s;
+        }
+        .site-nav a:hover, .site-nav a.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .main { max-width: 960px; margin: 2rem auto; padding: 0 1.5rem; }
+        .card {
+            background: white; border: 1px solid var(--gray-200);
+            border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .card h2 { margin: 0 0 0.25rem; font-size: 1.15rem; font-weight: 600; color: var(--gray-900); }
+        .card .subtitle { margin: 0 0 1.25rem; font-size: 0.85rem; color: var(--gray-400); }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label {
+            display: block; margin-bottom: 0.35rem; font-size: 0.875rem;
+            font-weight: 500; color: var(--gray-700);
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea {
+            width: 100%%; padding: 0.6rem 0.75rem;
+            border: 1px solid var(--gray-300); border-radius: var(--radius);
+            font-size: 0.9rem; color: var(--gray-800); background: white;
+            transition: border-color 0.15s, box-shadow 0.15s; outline: none;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+        }
+        .form-group textarea { resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 0.6rem 1.25rem; font-size: 0.875rem; font-weight: 500;
+            border: none; border-radius: var(--radius); cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+        }
+        .btn:active { transform: scale(0.97); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .result-msg {
+            margin-top: 1rem; padding: 0.85rem 1rem; border-radius: var(--radius);
+            background: var(--success-bg); border: 1px solid ##bbf7d0;
+            color: var(--success); font-size: 0.9rem; font-weight: 500;
+        }
+        .hidden { display: none !important; }
+        .contact-info { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 0.5rem; }
+        .info-item h3 { margin: 0 0 0.25rem; font-size: 0.9rem; font-weight: 600; color: var(--gray-900); }
+        .info-item p { margin: 0; font-size: 0.85rem; color: var(--gray-500); }
+        @media (max-width: 640px) { .form-row, .contact-info { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <h1 id="page-title">Contact</h1>
+            <p id="contact-subtitle">Get in touch with us.</p>
+        </div>
+    </header>
+
+    <nav class="site-nav" id="main-nav">
+        <div class="container">
+            <a href="/index.bxm" id="nav-home">Home</a>
+            <a href="/about.bxm" id="nav-about">About</a>
+            <a href="/contact.bxm" id="nav-contact" class="active">Contact</a>
+        </div>
+    </nav>
+
+    <main class="main">
+
+        <section class="card" id="contact-form-section">
+            <h2>Send Us a Message</h2>
+            <p class="subtitle">Fill out the form below and we will get back to you.</p>
+            <form id="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contact-name">Full Name</label>
+                        <input type="text" id="contact-name" name="name" placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email Address</label>
+                        <input type="email" id="contact-email" name="email" placeholder="you@example.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-subject">Subject</label>
+                    <input type="text" id="contact-subject" name="subject" placeholder="What is this about?">
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" name="message" rows="5" placeholder="Type your message here..."></textarea>
+                </div>
+                <button type="submit" id="contact-submit-btn" class="btn btn-primary">Send Message</button>
+            </form>
+            <div id="contact-result" class="result-msg hidden"></div>
+        </section>
+
+        <section class="card" id="contact-info-section">
+            <h2>Contact Information</h2>
+            <p class="subtitle">You can also reach us through the following channels.</p>
+            <div class="contact-info">
+                <div class="info-item" id="info-email">
+                    <h3>Email</h3>
+                    <p>hello@boxlang-test.dev</p>
+                </div>
+                <div class="info-item" id="info-phone">
+                    <h3>Phone</h3>
+                    <p>+1 (555) 123-4567</p>
+                </div>
+                <div class="info-item" id="info-address">
+                    <h3>Address</h3>
+                    <p>123 Test Street, Dev City, TX 75001</p>
+                </div>
+                <div class="info-item" id="info-hours">
+                    <h3>Hours</h3>
+                    <p>Mon &ndash; Fri, 9:00 AM &ndash; 5:00 PM CT</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var name = document.getElementById('contact-name').value;
+            var result = document.getElementById('contact-result');
+            result.textContent = 'Thank you, ' + name + '! We will be in touch shortly.';
+            result.classList.remove('hidden');
+        });
+    </script>
+
+</body>
+</html>
+</bx:output>
