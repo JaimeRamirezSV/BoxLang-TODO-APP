@@ -1,0 +1,22 @@
+services:
+  simple-page:
+    image: ortussolutions/boxlang:miniserver
+    environment:
+      - BOXLANG_DEBUG=true
+      - BOXLANG_MODULES=
+      - MAX_MEMORY=1g
+      - MIN_MEMORY=512m
+      - TZ=UTC
+    container_name: simple-page
+    ports:
+      - '8080:8080'
+    volumes:
+      # Mount our application in delgated mode
+      - .:/app:delegated
+      - ./config/boxlang.json:/boxlang.json
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
