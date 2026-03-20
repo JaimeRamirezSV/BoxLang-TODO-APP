@@ -18,7 +18,7 @@ A BoxLang web application with interactive UI components designed for Playwright
 
    ```bash
    git clone <repository-url>
-   cd example-simple-page-bx-tests
+   cd itb-simple-page
    ```
 
 2. **Start the application:**
