@@ -1,5 +1,574 @@
 
 <bx:output>
-    <h1>Hello from BoxLang!</h1>
-    <p>The server is running correctly.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoxLang Test Page</title>
+    <style>
+        :root {
+            --primary: ##2563eb;
+            --primary-hover: ##1d4ed8;
+            --success: ##16a34a;
+            --success-bg: ##dcfce7;
+            --danger: ##dc2626;
+            --gray-50: ##f9fafb;
+            --gray-100: ##f3f4f6;
+            --gray-200: ##e5e7eb;
+            --gray-300: ##d1d5db;
+            --gray-400: ##9ca3af;
+            --gray-500: ##6b7280;
+            --gray-700: ##374151;
+            --gray-800: ##1f2937;
+            --gray-900: ##111827;
+            --radius: 8px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Header */
+        .site-header {
+            background: linear-gradient(135deg, var(--primary) 0%%, ##7c3aed 100%%);
+            color: white;
+            padding: 2.5rem 2rem 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        .site-header .container { max-width: 960px; margin: 0 auto; }
+        .site-header h1 {
+            margin: 0 0 0.25rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+        .site-header p {
+            margin: 0;
+            opacity: 0.85;
+            font-size: 1.05rem;
+        }
+
+        /* Navigation */
+        .site-nav {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: var(--shadow-sm);
+        }
+        .site-nav .container {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0;
+        }
+        .site-nav a {
+            display: inline-block;
+            padding: 0.85rem 1.25rem;
+            color: var(--gray-500);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: color 0.15s, border-color 0.15s;
+        }
+        .site-nav a:hover, .site-nav a.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Main layout */
+        .main { max-width: 960px; margin: 2rem auto; padding: 0 1.5rem; }
+
+        /* Cards */
+        .card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .card h2 {
+            margin: 0 0 0.25rem;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        .card .subtitle {
+            margin: 0 0 1.25rem;
+            font-size: 0.85rem;
+            color: var(--gray-400);
+        }
+
+        /* Form elements */
+        .form-group { margin-bottom: 1rem; }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.35rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%%;
+            padding: 0.6rem 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            color: var(--gray-800);
+            background: white;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+        }
+        .form-group textarea { resize: vertical; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .checkbox-group, .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+        .radio-group { gap: 1.25rem; }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+        }
+        .btn:active { transform: scale(0.97); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-outline {
+            background: white;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+        .btn-outline:hover { background: var(--gray-100); }
+        .btn-sm {
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+        }
+
+        /* Result message */
+        .result-msg {
+            margin-top: 1rem;
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius);
+            background: var(--success-bg);
+            border: 1px solid ##bbf7d0;
+            color: var(--success);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Counter */
+        .counter-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .counter-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            min-width: 3rem;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+        .counter-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%%;
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--gray-300);
+            background: white;
+            color: var(--gray-700);
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .counter-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Table */
+        .data-table { width: 100%%; border-collapse: collapse; margin-top: 0.5rem; }
+        .data-table th {
+            text-align: left;
+            padding: 0.65rem 0.85rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-500);
+            background: var(--gray-50);
+            border-bottom: 2px solid var(--gray-200);
+        }
+        .data-table td {
+            padding: 0.7rem 0.85rem;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-700);
+        }
+        .data-table tbody tr:hover { background: var(--gray-50); }
+        .badge {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .badge-blue { background: ##dbeafe; color: ##1e40af; }
+        .badge-green { background: ##dcfce7; color: ##166534; }
+        .badge-gray { background: var(--gray-100); color: var(--gray-600, ##4b5563); }
+
+        /* Hover demo */
+        .hover-zone {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--radius);
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, background 0.2s;
+            font-weight: 500;
+        }
+        .hover-zone:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: ##eff6ff;
+        }
+        .hover-result {
+            margin-top: 0.75rem;
+            padding: 0.6rem 1rem;
+            background: ##eff6ff;
+            border-radius: var(--radius);
+            color: var(--primary);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Toggle content */
+        .toggle-content {
+            margin-top: 1rem;
+            padding: 1rem 1.25rem;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            color: var(--gray-700);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* Drag and Drop */
+        .dnd-area { display: flex; align-items: center; gap: 2rem; margin-top: 0.5rem; flex-wrap: wrap; }
+        .drag-item {
+            width: 120px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), ##7c3aed);
+            color: white;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            user-select: none;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .drag-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .drop-zone {
+            width: 180px;
+            height: 80px;
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-400);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .drop-zone.dropped {
+            border-color: var(--success);
+            background: var(--success-bg);
+            color: var(--success);
+            border-style: solid;
+        }
+
+        /* Two-column layout for smaller cards */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+        @media (max-width: 640px) {
+            .form-row, .grid-2 { grid-template-columns: 1fr; }
+            .dnd-area { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <h1 id="page-title">BoxLang Test Page</h1>
+            <p id="welcome-message">Interactive UI components for Playwright end-to-end testing.</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="main-nav">
+        <div class="container">
+            <a href="/" id="nav-home" class="active">Home</a>
+            <a href="/about" id="nav-about">About</a>
+            <a href="/contact" id="nav-contact">Contact</a>
+        </div>
+    </nav>
+
+    <main class="main">
+
+        <!-- Contact Form -->
+        <section class="card" id="contact-form-section">
+            <h2>Contact Form</h2>
+            <p class="subtitle">Fill in the fields, select options, and submit to test form interactions.</p>
+            <form id="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="3" placeholder="Write your message..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option value="">-- Select --</option>
+                            <option value="support">Support</option>
+                            <option value="sales">Sales</option>
+                            <option value="feedback">Feedback</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <div class="radio-group" style="margin-top:0.35rem">
+                            <label><input type="radio" name="priority" value="low" id="priority-low"> Low</label>
+                            <label><input type="radio" name="priority" value="high" id="priority-high"> High</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agree" name="agree">
+                        <label for="agree" style="margin:0">I agree to the terms and conditions</label>
+                    </div>
+                </div>
+                <button type="submit" id="submit-btn" class="btn btn-primary">Send Message</button>
+            </form>
+            <div id="form-result" class="result-msg hidden"></div>
+        </section>
+
+        <div class="grid-2">
+
+            <!-- Toggle Section -->
+            <section class="card" id="toggle-section">
+                <h2>Toggle Demo</h2>
+                <p class="subtitle">Click the button to reveal or hide content.</p>
+                <button id="toggle-btn" class="btn btn-outline">Show Details</button>
+                <div id="toggle-content" class="toggle-content hidden">
+                    <p id="toggle-text" style="margin:0">These are the hidden details revealed by clicking the button. Playwright can verify this content becomes visible.</p>
+                </div>
+            </section>
+
+            <!-- Counter Section -->
+            <section class="card" id="counter-section">
+                <h2>Counter</h2>
+                <p class="subtitle">Increment and decrement to test sequential clicks.</p>
+                <div class="counter-display">
+                    <button id="decrement-btn" class="counter-btn" aria-label="Decrement">&minus;</button>
+                    <span id="counter-value" class="counter-value">0</span>
+                    <button id="increment-btn" class="counter-btn" aria-label="Increment">+</button>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Data Table -->
+        <section class="card" id="table-section">
+            <h2>Users Table</h2>
+            <p class="subtitle">A data table for testing element queries and text assertions.</p>
+            <table class="data-table" id="users-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td class="user-name">Alice</td>
+                        <td><span class="badge badge-blue">Admin</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="user-name">Bob</td>
+                        <td><span class="badge badge-green">Editor</span></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="user-name">Charlie</td>
+                        <td><span class="badge badge-gray">Viewer</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <div class="grid-2">
+
+            <!-- Hover Section -->
+            <section class="card" id="hover-section">
+                <h2>Hover Demo</h2>
+                <p class="subtitle">Hover over the target to reveal a message.</p>
+                <div id="hover-target" class="hover-zone">
+                    <span>&##9758;</span> Hover over me
+                </div>
+                <div id="hover-result" class="hover-result hidden">You hovered! This message appeared on mouseenter.</div>
+            </section>
+
+            <!-- Drag and Drop -->
+            <section class="card" id="dnd-section">
+                <h2>Drag &amp; Drop</h2>
+                <p class="subtitle">Drag the item into the drop zone.</p>
+                <div class="dnd-area">
+                    <div id="drag-source" draggable="true" class="drag-item">Drag me</div>
+                    <div id="drop-target" class="drop-zone">Drop here</div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- Client-side interactivity -->
+    <script>
+        // Form submit
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var name = document.getElementById('name').value;
+            var result = document.getElementById('form-result');
+            result.textContent = 'Thank you, ' + name + '! Your message has been sent.';
+            result.classList.remove('hidden');
+        });
+
+        // Toggle
+        document.getElementById('toggle-btn').addEventListener('click', function() {
+            var content = document.getElementById('toggle-content');
+            var btn = this;
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                btn.textContent = 'Hide Details';
+            } else {
+                content.classList.add('hidden');
+                btn.textContent = 'Show Details';
+            }
+        });
+
+        // Counter
+        (function() {
+            var count = 0;
+            var display = document.getElementById('counter-value');
+            document.getElementById('increment-btn').addEventListener('click', function() {
+                count++;
+                display.textContent = count;
+            });
+            document.getElementById('decrement-btn').addEventListener('click', function() {
+                count--;
+                display.textContent = count;
+            });
+        })();
+
+        // Hover
+        document.getElementById('hover-target').addEventListener('mouseenter', function() {
+            document.getElementById('hover-result').classList.remove('hidden');
+        });
+        document.getElementById('hover-target').addEventListener('mouseleave', function() {
+            document.getElementById('hover-result').classList.add('hidden');
+        });
+
+        // Drag and Drop
+        document.getElementById('drag-source').addEventListener('dragstart', function(e) {
+            e.dataTransfer.setData('text/plain', 'dragged');
+        });
+        document.getElementById('drop-target').addEventListener('dragover', function(e) {
+            e.preventDefault();
+        });
+        document.getElementById('drop-target').addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.textContent = 'Dropped!';
+            this.classList.add('dropped');
+        });
+    </script>
+
+</body>
+</html>
 </bx:output>
