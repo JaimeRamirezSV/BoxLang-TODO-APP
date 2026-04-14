@@ -52,7 +52,7 @@ A BoxLang web application with session-based authentication and full CRUD todo m
 
    ```bash
    git clone <repository-url>
-   cd itb-simple-page
+   cd BoxLang-TODO-APP
    ```
 
 2. **Start the application:**
