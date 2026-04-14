@@ -33,7 +33,7 @@
             <h1>&##9745; My Todo List</h1>
             <div class="user-info">
                 <span>Hello, #encodeForHTML( session.username )#</span>
-                <a href="/pages/logout.bxm" aria-label="Logout">Logout</a>
+                <a href="##" onclick="openLogout();return false" aria-label="Logout">Logout</a>
             </div>
         </div>
     </header>
@@ -138,6 +138,17 @@
         </div>
     </div>
 
+    <div id="logoutOverlay" class="edit-overlay" role="dialog" aria-label="Confirm logout" aria-modal="true" onclick="if(event.target===this)closeLogout()">
+        <div class="edit-modal">
+            <h3>&##128075; Logout</h3>
+            <p style="margin:0 0 1.25rem;color:var(--gray-600)">Are you sure you want to log out?</p>
+            <div class="actions">
+                <button type="button" class="btn btn-ghost" onclick="closeLogout()">Cancel</button>
+                <a href="/pages/logout.bxm" class="btn btn-primary" aria-label="Confirm logout">Yes, log out</a>
+            </div>
+        </div>
+    </div>
+
     <script>
         var pendingDeleteId = null;
 
@@ -167,8 +178,15 @@
             document.getElementById('editOverlay').classList.remove('active');
         }
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { closeEdit(); closeDelete(); }
+            if (e.key === 'Escape') { closeEdit(); closeDelete(); closeLogout(); }
         });
+
+        function openLogout() {
+            document.getElementById('logoutOverlay').classList.add('active');
+        }
+        function closeLogout() {
+            document.getElementById('logoutOverlay').classList.remove('active');
+        }
     </script>
 
     <bx:set flashMsg = url.msg ?: "">
