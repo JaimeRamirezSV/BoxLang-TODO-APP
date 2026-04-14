@@ -1,5 +1,12 @@
+/**
+ * Data-access service for the todos table.
+ * Provides CRUD operations scoped to a specific user.
+ */
 class {
 
+    /**
+     * Create the todos table if it does not already exist.
+     */
     public void function initSchema() {
         queryExecute( "
             CREATE TABLE IF NOT EXISTS todos (
@@ -13,6 +20,12 @@ class {
         " )
     }
 
+    /**
+     * Retrieve all todos for a given user, ordered by newest first.
+     *
+     * @userId The user's ID.
+     * @return A query containing id, title, completed, and created_at columns.
+     */
     public query function getAllByUser( required numeric userId ) {
         return queryExecute(
             "SELECT id, title, completed, created_at FROM todos WHERE user_id = :userId ORDER BY created_at DESC",
@@ -20,6 +33,12 @@ class {
         )
     }
 
+    /**
+     * Create a new todo for the given user.
+     *
+     * @userId The user's ID.
+     * @title  The todo title text.
+     */
     public void function create( required numeric userId, required string title ) {
         queryExecute(
             "INSERT INTO todos (user_id, title) VALUES (:userId, :title)",
@@ -30,6 +49,12 @@ class {
         )
     }
 
+    /**
+     * Toggle the completed status of a todo (0 → 1 or 1 → 0).
+     *
+     * @todoId The todo's ID.
+     * @userId The user's ID (ensures ownership).
+     */
     public void function toggleComplete( required numeric todoId, required numeric userId ) {
         queryExecute(
             "UPDATE todos SET completed = CASE WHEN completed = 1 THEN 0 ELSE 1 END WHERE id = :todoId AND user_id = :userId",
@@ -40,6 +65,13 @@ class {
         )
     }
 
+    /**
+     * Update the title of an existing todo.
+     *
+     * @todoId The todo's ID.
+     * @userId The user's ID (ensures ownership).
+     * @title  The new title text.
+     */
     public void function updateTitle( required numeric todoId, required numeric userId, required string title ) {
         queryExecute(
             "UPDATE todos SET title = :title WHERE id = :todoId AND user_id = :userId",
@@ -51,6 +83,12 @@ class {
         )
     }
 
+    /**
+     * Delete a todo by ID, scoped to the owning user.
+     *
+     * @todoId The todo's ID.
+     * @userId The user's ID (ensures ownership).
+     */
     public void function delete( required numeric todoId, required numeric userId ) {
         queryExecute(
             "DELETE FROM todos WHERE id = :todoId AND user_id = :userId",

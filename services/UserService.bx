@@ -1,5 +1,12 @@
+/**
+ * Data-access service for the users table.
+ * Handles schema setup, default user seeding, and authentication.
+ */
 class {
 
+    /**
+     * Create the users table if it does not already exist.
+     */
     public void function initSchema() {
         queryExecute( "
             CREATE TABLE IF NOT EXISTS users (
@@ -11,6 +18,10 @@ class {
         " )
     }
 
+    /**
+     * Seed a default admin user when the users table is empty.
+     * Default credentials: admin / admin123 (password stored as SHA-256 hash).
+     */
     public void function seedDefaultUser() {
         var existing = queryExecute( "SELECT COUNT(*) AS cnt FROM users" )
         if ( existing.cnt == 0 ) {
@@ -24,6 +35,13 @@ class {
         }
     }
 
+    /**
+     * Authenticate a user by username and password.
+     *
+     * @username The username to look up.
+     * @password The plain-text password (hashed with SHA-256 before comparison).
+     * @return   A query with id and username columns; empty if credentials are invalid.
+     */
     public query function authenticate( required string username, required string password ) {
         return queryExecute(
             "SELECT id, username FROM users WHERE username = :username AND password = :password",

@@ -1,5 +1,16 @@
+/**
+ * Handles login form submissions.
+ * Validates credentials via UserService and populates the session on success.
+ */
 class {
 
+    /**
+     * Authenticate a user from login form data.
+     *
+     * @formData     The submitted form data containing "username" and "password".
+     * @sessionScope The current session struct; populated with user info on success.
+     * @return       A struct with keys "success" (boolean) and "errorMessage" (string).
+     */
     public struct function handle( required struct formData, required struct sessionScope ) {
         var result = { success: false, errorMessage: "" }
 

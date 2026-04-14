@@ -1,5 +1,15 @@
+/**
+ * Handles todo-related form submissions.
+ * Dispatches create, toggle, edit, and delete actions to the TodoService.
+ */
 class {
 
+    /**
+     * Process a todo form submission based on the action field.
+     *
+     * @formData The submitted form data containing an "action" key and relevant fields.
+     * @userId   The authenticated user's ID, used to scope all operations.
+     */
     public void function handle( required struct formData, required numeric userId ) {
         var todoService = new services.TodoService()
         var action = arguments.formData.action ?: ""
