@@ -1,3 +1,7 @@
+<bx:if structKeyExists( session, "isLoggedIn" ) && session.isLoggedIn>
+    <bx:set location( url="/pages/todos.bxm", addtoken=false )>
+</bx:if>
+
 <bx:set errorMessage = "">
 
 <bx:if structKeyExists( form, "action" ) && form.action == "login">
