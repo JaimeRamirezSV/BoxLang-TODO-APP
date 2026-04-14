@@ -1,0 +1,408 @@
+/* ==========================================================================
+   Global Styles — Flat Grey & Light Blue Theme
+   ========================================================================== */
+
+:root {
+    --primary: #5ba4cf;
+    --primary-hover: #4a93be;
+    --primary-light: #e8f4fa;
+    --success: #6abf69;
+    --success-bg: #e8f5e8;
+    --danger: #cf5b5b;
+    --danger-hover: #b94a4a;
+    --danger-bg: #fdeaea;
+    --gray-50: #f7f8fa;
+    --gray-100: #eef0f3;
+    --gray-200: #dde1e6;
+    --gray-300: #c4c9d0;
+    --gray-400: #a2a9b1;
+    --gray-500: #7b838e;
+    --gray-600: #5a6270;
+    --gray-700: #3e4550;
+    --gray-800: #2c3138;
+    --gray-900: #1a1e24;
+    --white: #ffffff;
+    --radius: 6px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 8px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--gray-50);
+    color: var(--gray-800);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+    display: inline-block;
+    padding: 0.55rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+    text-decoration: none;
+    text-align: center;
+}
+.btn-primary { background: var(--primary); color: var(--white); }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-danger { background: var(--danger); color: var(--white); }
+.btn-danger:hover { background: var(--danger-hover); }
+.btn-ghost {
+    background: var(--gray-100);
+    color: var(--gray-700);
+    border: 1px solid var(--gray-300);
+}
+.btn-ghost:hover { background: var(--gray-200); }
+.btn-sm { padding: 0.35rem 0.65rem; font-size: 0.8rem; }
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+.form-group { margin-bottom: 1rem; }
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 0.35rem;
+}
+.form-group input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    background: var(--white);
+    transition: border-color 0.15s;
+}
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(91,164,207,0.15);
+}
+
+/* ==========================================================================
+   Alerts
+   ========================================================================== */
+
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+.alert-error { background: var(--danger-bg); color: var(--danger); }
+.alert-success { background: var(--success-bg); color: var(--success); }
+
+/* ==========================================================================
+   Site Header
+   ========================================================================== */
+
+.site-header {
+    background: var(--gray-800);
+    color: var(--white);
+    padding: 1.25rem 2rem;
+    box-shadow: var(--shadow-md);
+}
+.site-header .container {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.site-header h1 {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--primary-light);
+}
+.site-header .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--gray-300);
+}
+.site-header .user-info a {
+    color: var(--white);
+    text-decoration: none;
+    background: rgba(255,255,255,0.1);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    transition: background 0.15s;
+}
+.site-header .user-info a:hover { background: rgba(255,255,255,0.2); }
+
+/* ==========================================================================
+   Site Nav
+   ========================================================================== */
+
+.site-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: var(--shadow-sm);
+}
+.site-nav .container {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+}
+.site-nav a {
+    display: inline-block;
+    padding: 0.85rem 1.25rem;
+    color: var(--gray-500);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+}
+.site-nav a:hover { color: var(--gray-800); }
+.site-nav a.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+/* ==========================================================================
+   Main Content
+   ========================================================================== */
+
+.main {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* ==========================================================================
+   Login Card
+   ========================================================================== */
+
+.login-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    margin: 1rem;
+}
+.login-card h1 {
+    margin: 0 0 0.25rem;
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--gray-900);
+}
+.login-card p.subtitle {
+    text-align: center;
+    color: var(--gray-500);
+    margin: 0 0 1.5rem;
+    font-size: 0.95rem;
+}
+.login-card .btn { width: 100%; }
+.login-card .links {
+    text-align: center;
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   Stats
+   ========================================================================== */
+
+.stats {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.stat-card {
+    flex: 1;
+    background: var(--white);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    border: 1px solid var(--gray-200);
+}
+.stat-card .number {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+.stat-card .label {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   Add Form
+   ========================================================================== */
+
+.add-form {
+    background: var(--white);
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    border: 1px solid var(--gray-200);
+}
+.add-form input[type="text"] {
+    flex: 1;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    background: var(--white);
+}
+.add-form input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(91,164,207,0.15);
+}
+
+/* ==========================================================================
+   Todo List
+   ========================================================================== */
+
+.todo-list { list-style: none; padding: 0; margin: 0; }
+.todo-item {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: box-shadow 0.15s;
+}
+.todo-item:hover { box-shadow: var(--shadow); }
+.todo-item.completed .todo-title { text-decoration: line-through; color: var(--gray-400); }
+.todo-title { flex: 1; font-size: 0.95rem; }
+.todo-actions { display: flex; gap: 0.35rem; align-items: center; }
+.todo-date { font-size: 0.8rem; color: var(--gray-400); margin-right: 0.5rem; }
+.btn-toggle {
+    background: none;
+    border: 1px solid var(--gray-300);
+    font-size: 1.1rem;
+    padding: 0.15rem 0.45rem;
+    cursor: pointer;
+    border-radius: var(--radius);
+}
+
+/* ==========================================================================
+   Empty State
+   ========================================================================== */
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--gray-400);
+}
+.empty-state .icon { font-size: 3rem; margin-bottom: 0.5rem; }
+
+/* ==========================================================================
+   Edit Modal
+   ========================================================================== */
+
+.edit-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+.edit-overlay.active { display: flex; }
+.edit-modal {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 420px;
+    margin: 1rem;
+}
+.edit-modal h3 { margin: 0 0 1rem; color: var(--gray-800); }
+.edit-modal input[type="text"] {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+.edit-modal .actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
+
+/* ==========================================================================
+   Error Page (404)
+   ========================================================================== */
+
+.error-card {
+    text-align: center;
+    padding: 3rem 2rem;
+    max-width: 480px;
+}
+.error-code {
+    font-size: 6rem;
+    font-weight: 800;
+    color: var(--gray-300);
+    margin: 0;
+    line-height: 1;
+}
+.error-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0.75rem 0 0.5rem;
+}
+.error-message {
+    color: var(--gray-500);
+    margin: 0 0 2rem;
+    font-size: 1rem;
+}
+.back-link {
+    display: inline-block;
+    padding: 0.65rem 1.5rem;
+    background: var(--primary);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.15s;
+}
+.back-link:hover { background: var(--primary-hover); }
+.emoji { font-size: 4rem; margin-bottom: 0.5rem; }
+
+/* ==========================================================================
+   Layout Helpers
+   ========================================================================== */
+
+.centered-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
