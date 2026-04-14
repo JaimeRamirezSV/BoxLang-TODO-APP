@@ -3,7 +3,16 @@
 <bx:if structKeyExists( form, "action" )>
     <bx:set handler = new handlers.TodoHandler()>
     <bx:set handler.handle( form, userId )>
-    <bx:set location( url="/pages/todos.bxm", addtoken=false )>
+    <bx:set flashAction = form.action ?: "">
+    <bx:if flashAction == "create">
+        <bx:set location( url="/pages/todos.bxm?msg=added", addtoken=false )>
+    <bx:elseif flashAction == "edit">
+        <bx:set location( url="/pages/todos.bxm?msg=updated", addtoken=false )>
+    <bx:elseif flashAction == "delete">
+        <bx:set location( url="/pages/todos.bxm?msg=deleted", addtoken=false )>
+    <bx:else>
+        <bx:set location( url="/pages/todos.bxm", addtoken=false )>
+    </bx:if>
 </bx:if>
 
 <bx:set todoService = new services.TodoService()>
@@ -161,6 +170,34 @@
             if (e.key === 'Escape') { closeEdit(); closeDelete(); }
         });
     </script>
+
+    <bx:set flashMsg = url.msg ?: "">
+    <bx:if len( flashMsg )>
+        <div class="toast-container" role="status" aria-live="polite">
+            <bx:if flashMsg == "welcome">
+                <div class="toast toast-success">
+                    <span class="toast-icon">&##x1F389;</span>
+                    <span>Welcome back, #encodeForHTML( session.username )#!</span>
+                </div>
+            <bx:elseif flashMsg == "added">
+                <div class="toast toast-success">
+                    <span class="toast-icon">&##x2705;</span>
+                    <span>Todo added successfully!</span>
+                </div>
+            <bx:elseif flashMsg == "updated">
+                <div class="toast toast-info">
+                    <span class="toast-icon">&##x270F;</span>
+                    <span>Todo updated!</span>
+                </div>
+            <bx:elseif flashMsg == "deleted">
+                <div class="toast toast-warning">
+                    <span class="toast-icon">&##x1F5D1;</span>
+                    <span>Todo deleted.</span>
+                </div>
+            </bx:if>
+        </div>
+        <script>history.replaceState(null, '', window.location.pathname); setTimeout(function(){ var t = document.querySelector('.toast-container'); if(t) t.remove(); }, 3200);</script>
+    </bx:if>
 </body>
 </html>
 </bx:output>

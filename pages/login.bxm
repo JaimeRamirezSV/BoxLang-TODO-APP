@@ -8,7 +8,7 @@
     <bx:set handler = new handlers.LoginHandler()>
     <bx:set result  = handler.handle( form, session )>
     <bx:if result.success>
-        <bx:set location( url="/pages/todos.bxm", addtoken=false )>
+        <bx:set location( url="/pages/todos.bxm?msg=welcome", addtoken=false )>
     <bx:else>
         <bx:set errorMessage = result.errorMessage>
     </bx:if>
@@ -49,6 +49,17 @@
             <p style="color:var(--gray-400);margin:0">Default: admin / admin123</p>
         </div>
     </div>
+
+    <bx:set flashMsg = url.msg ?: "">
+    <bx:if flashMsg == "logout">
+        <div class="toast-container" role="status" aria-live="polite">
+            <div class="toast toast-info">
+                <span class="toast-icon">&##128075;</span>
+                <span>You have been logged out. See you soon!</span>
+            </div>
+        </div>
+        <script>history.replaceState(null, '', window.location.pathname); setTimeout(function(){ var t = document.querySelector('.toast-container'); if(t) t.remove(); }, 3200);</script>
+    </bx:if>
 </body>
 </html>
 </bx:output>
