@@ -29,10 +29,10 @@
         <p class="subtitle">Sign in to continue</p>
 
         <bx:if len( errorMessage )>
-            <div class="alert alert-error">#encodeForHTML( errorMessage )#</div>
+            <div class="alert alert-error" role="alert">#encodeForHTML( errorMessage )#</div>
         </bx:if>
 
-        <form method="post" action="/pages/login.bxm">
+        <form method="post" action="/pages/login.bxm" aria-label="Login form">
             <input type="hidden" name="action" value="login">
             <div class="form-group">
                 <label for="login-username">Username</label>
@@ -42,7 +42,7 @@
                 <label for="login-password">Password</label>
                 <input type="password" id="login-password" name="password" required autocomplete="current-password">
             </div>
-            <button type="submit" class="btn btn-primary">Sign In</button>
+            <button type="submit" class="btn btn-primary" aria-label="Sign In">Sign In</button>
         </form>
 
         <div class="links">

@@ -19,23 +19,23 @@
     <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 <body>
-    <header class="site-header">
+    <header class="site-header" role="banner">
         <div class="container">
             <h1>&##9745; My Todo List</h1>
             <div class="user-info">
                 <span>Hello, #encodeForHTML( session.username )#</span>
-                <a href="/pages/logout.bxm">Logout</a>
+                <a href="/pages/logout.bxm" aria-label="Logout">Logout</a>
             </div>
         </div>
     </header>
 
-    <nav class="site-nav">
+    <nav class="site-nav" aria-label="Main navigation">
         <div class="container">
             <a href="/pages/todos.bxm" class="active">Todos</a>
         </div>
     </nav>
 
-    <main class="main">
+    <main class="main" aria-label="Todo management">
         <bx:set totalCount     = todos.recordCount>
         <bx:set completedCount = 0>
         <bx:loop query="todos">
@@ -45,35 +45,35 @@
         </bx:loop>
         <bx:set pendingCount = totalCount - completedCount>
 
-        <div class="stats">
-            <div class="stat-card">
+        <section class="stats" role="region" aria-label="Todo statistics">
+            <div class="stat-card" aria-label="Total todos">
                 <div class="number">#totalCount#</div>
                 <div class="label">Total</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" aria-label="Pending todos">
                 <div class="number">#pendingCount#</div>
                 <div class="label">Pending</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" aria-label="Completed todos">
                 <div class="number">#completedCount#</div>
                 <div class="label">Done</div>
             </div>
-        </div>
+        </section>
 
-        <form method="post" action="/pages/todos.bxm" class="add-form">
+        <form method="post" action="/pages/todos.bxm" class="add-form" aria-label="Add todo">
             <input type="hidden" name="action" value="create">
-            <input type="text" name="title" placeholder="What needs to be done?" required>
+            <input type="text" name="title" placeholder="What needs to be done?" required aria-label="New todo title">
             <button type="submit" class="btn btn-primary">Add Todo</button>
         </form>
 
         <bx:if todos.recordCount>
-            <ul class="todo-list">
+            <ul class="todo-list" aria-label="Todo list">
                 <bx:loop query="todos">
-                    <li class="todo-item<bx:if todos.completed> completed</bx:if>">
+                    <li class="todo-item<bx:if todos.completed> completed</bx:if>" aria-label="#encodeForHTML( todos.title )#">
                         <form method="post" action="/pages/todos.bxm" style="display:inline">
                             <input type="hidden" name="action" value="toggle">
                             <input type="hidden" name="todoId" value="#todos.id#">
-                            <button type="submit" class="btn btn-sm btn-toggle">
+                            <button type="submit" class="btn btn-sm btn-toggle" aria-label="<bx:if todos.completed>Mark as pending<bx:else>Mark as complete</bx:if>">
                                 <bx:if todos.completed>&##9745;<bx:else>&##9744;</bx:if>
                             </button>
                         </form>
@@ -82,7 +82,7 @@
                         <span class="todo-date">#dateTimeFormat( todos.created_at, "MMM dd, yyyy" )#</span>
 
                         <div class="todo-actions">
-                            <button class="btn btn-sm btn-edit"
+                            <button class="btn btn-sm btn-edit" aria-label="Edit"
                                 onclick="openEdit(#todos.id#, '#encodeForHTML( todos.title )#')">
                                 <span>&##9998;</span>
                             </button>
@@ -90,7 +90,7 @@
                                   onsubmit="return confirm('Delete this todo?')">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="todoId" value="#todos.id#">
-                                <button type="submit" class="btn btn-danger btn-sm"><span>&##128465;</span></button>
+                                <button type="submit" class="btn btn-danger btn-sm" aria-label="Delete"><span>&##128465;</span></button>
                             </form>
                         </div>
                     </li>
@@ -104,13 +104,13 @@
         </bx:if>
     </main>
 
-    <div id="editOverlay" class="edit-overlay" onclick="if(event.target===this)closeEdit()">
+    <div id="editOverlay" class="edit-overlay" role="dialog" aria-label="Edit todo" aria-modal="true" onclick="if(event.target===this)closeEdit()">
         <div class="edit-modal">
             <h3>&##9998; Edit Todo</h3>
-            <form method="post" action="/pages/todos.bxm">
+            <form method="post" action="/pages/todos.bxm" aria-label="Edit todo form">
                 <input type="hidden" name="action" value="edit">
                 <input type="hidden" name="todoId" id="editTodoId">
-                <input type="text" name="title" id="editTitle" required>
+                <input type="text" name="title" id="editTitle" required aria-label="Todo title">
                 <div class="actions">
                     <button type="button" class="btn btn-ghost" onclick="closeEdit()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>
