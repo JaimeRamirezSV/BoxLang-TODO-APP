@@ -1,0 +1,64 @@
+class {
+
+    public void function initSchema() {
+        queryExecute( "
+            CREATE TABLE IF NOT EXISTS todos (
+                id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id    INTEGER NOT NULL,
+                title      VARCHAR(255) NOT NULL,
+                completed  INTEGER DEFAULT 0,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            )
+        " )
+    }
+
+    public query function getAllByUser( required numeric userId ) {
+        return queryExecute(
+            "SELECT id, title, completed, created_at FROM todos WHERE user_id = :userId ORDER BY created_at DESC",
+            { userId : { value: arguments.userId, type: "integer" } }
+        )
+    }
+
+    public void function create( required numeric userId, required string title ) {
+        queryExecute(
+            "INSERT INTO todos (user_id, title) VALUES (:userId, :title)",
+            {
+                userId : { value: arguments.userId, type: "integer" },
+                title  : { value: arguments.title,  type: "varchar" }
+            }
+        )
+    }
+
+    public void function toggleComplete( required numeric todoId, required numeric userId ) {
+        queryExecute(
+            "UPDATE todos SET completed = CASE WHEN completed = 1 THEN 0 ELSE 1 END WHERE id = :todoId AND user_id = :userId",
+            {
+                todoId : { value: arguments.todoId, type: "integer" },
+                userId : { value: arguments.userId, type: "integer" }
+            }
+        )
+    }
+
+    public void function updateTitle( required numeric todoId, required numeric userId, required string title ) {
+        queryExecute(
+            "UPDATE todos SET title = :title WHERE id = :todoId AND user_id = :userId",
+            {
+                title  : { value: arguments.title,  type: "varchar" },
+                todoId : { value: arguments.todoId, type: "integer" },
+                userId : { value: arguments.userId, type: "integer" }
+            }
+        )
+    }
+
+    public void function delete( required numeric todoId, required numeric userId ) {
+        queryExecute(
+            "DELETE FROM todos WHERE id = :todoId AND user_id = :userId",
+            {
+                todoId : { value: arguments.todoId, type: "integer" },
+                userId : { value: arguments.userId, type: "integer" }
+            }
+        )
+    }
+
+}

@@ -1,0 +1,33 @@
+class {
+
+    public void function handle( required struct formData, required numeric userId ) {
+        var todoService = new services.TodoService()
+        var action = arguments.formData.action ?: ""
+
+        if ( action == "create" ) {
+            var title = trim( arguments.formData.title ?: "" )
+            if ( len( title ) ) {
+                todoService.create( arguments.userId, title )
+            }
+        }
+
+        if ( action == "toggle" ) {
+            var todoId = arguments.formData.todoId ?: 0
+            todoService.toggleComplete( todoId, arguments.userId )
+        }
+
+        if ( action == "edit" ) {
+            var todoId = arguments.formData.todoId ?: 0
+            var title  = trim( arguments.formData.title ?: "" )
+            if ( len( title ) ) {
+                todoService.updateTitle( todoId, arguments.userId, title )
+            }
+        }
+
+        if ( action == "delete" ) {
+            var todoId = arguments.formData.todoId ?: 0
+            todoService.delete( todoId, arguments.userId )
+        }
+    }
+
+}

@@ -35,12 +35,23 @@ class {
      * ORM + Datasource Settings
      * --------------------------------------------------------------------------
      */
-    this.datasource = ""
+    this.datasources[ "appDB" ] = {
+        "driver"           : "sqlite",
+        "connectionString" : "jdbc:sqlite:/app/data/app.db"
+    }
+    this.datasource = "appDB"
     
     /**
      * Fires when the application starts
      */
     public boolean function onApplicationStart() {
+        var userService = new services.UserService()
+        var todoService = new services.TodoService()
+
+        userService.initSchema()
+        todoService.initSchema()
+        userService.seedDefaultUser()
+
         return true
     }
     
@@ -58,6 +69,17 @@ class {
      * @targetPage The requested page
      */
     public boolean function onRequestStart( string targetPage ) {
+        // Pages that don't require authentication
+        var publicPages = [ "/pages/login.bxm", "/index.bxm" ]
+        var currentPage = arguments.targetPage
+
+        // If user is not logged in and requesting a protected page, redirect to login
+        if ( !structKeyExists( session, "isLoggedIn" ) || !session.isLoggedIn ) {
+            if ( !arrayContainsNoCase( publicPages, currentPage ) ) {
+                location( url="/pages/login.bxm", addtoken=false )
+            }
+        }
+
         return true
     }
     

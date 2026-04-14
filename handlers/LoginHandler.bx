@@ -1,0 +1,29 @@
+class {
+
+    public struct function handle( required struct formData, required struct sessionScope ) {
+        var result = { success: false, errorMessage: "" }
+
+        var username = trim( arguments.formData.username ?: "" )
+        var password = trim( arguments.formData.password ?: "" )
+
+        if ( !len( username ) || !len( password ) ) {
+            result.errorMessage = "Please enter both username and password."
+            return result
+        }
+
+        var userService = new services.UserService()
+        var qUser = userService.authenticate( username, password )
+
+        if ( qUser.recordCount ) {
+            arguments.sessionScope.isLoggedIn = true
+            arguments.sessionScope.userId     = qUser.id
+            arguments.sessionScope.username   = qUser.username
+            result.success = true
+        } else {
+            result.errorMessage = "Invalid username or password."
+        }
+
+        return result
+    }
+
+}

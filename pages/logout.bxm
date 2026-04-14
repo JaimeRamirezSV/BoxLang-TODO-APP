@@ -1,0 +1,5 @@
+<bx:set structDelete( session, "isLoggedIn" )>
+<bx:set structDelete( session, "userId" )>
+<bx:set structDelete( session, "username" )>
+<bx:set sessionInvalidate()>
+<bx:set location( url="/pages/login.bxm", addtoken=false )>

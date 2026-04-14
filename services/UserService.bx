@@ -1,0 +1,37 @@
+class {
+
+    public void function initSchema() {
+        queryExecute( "
+            CREATE TABLE IF NOT EXISTS users (
+                id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                username   VARCHAR(50)  NOT NULL UNIQUE,
+                password   VARCHAR(255) NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        " )
+    }
+
+    public void function seedDefaultUser() {
+        var existing = queryExecute( "SELECT COUNT(*) AS cnt FROM users" )
+        if ( existing.cnt == 0 ) {
+            queryExecute(
+                "INSERT INTO users (username, password) VALUES (:username, :password)",
+                {
+                    username : { value: "admin", type: "varchar" },
+                    password : { value: hash( "admin123", "SHA-256" ), type: "varchar" }
+                }
+            )
+        }
+    }
+
+    public query function authenticate( required string username, required string password ) {
+        return queryExecute(
+            "SELECT id, username FROM users WHERE username = :username AND password = :password",
+            {
+                username : { value: arguments.username, type: "varchar" },
+                password : { value: hash( arguments.password, "SHA-256" ), type: "varchar" }
+            }
+        )
+    }
+
+}
