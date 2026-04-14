@@ -86,11 +86,10 @@
                                 onclick="openEdit(#todos.id#, '#encodeForHTML( todos.title )#')">
                                 <span>&##9998;</span>
                             </button>
-                            <form method="post" action="/pages/todos.bxm" style="display:inline"
-                                  onsubmit="return confirm('Delete this todo?')">
+                            <form method="post" action="/pages/todos.bxm" style="display:inline" id="deleteForm-#todos.id#">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="todoId" value="#todos.id#">
-                                <button type="submit" class="btn btn-danger btn-sm" aria-label="Delete"><span>&##128465;</span></button>
+                                <button type="button" class="btn btn-danger btn-sm" aria-label="Delete" onclick="openDelete(#todos.id#, '#encodeForHTML( todos.title )#')"><span>&##128465;</span></button>
                             </form>
                         </div>
                     </li>
@@ -119,7 +118,36 @@
         </div>
     </div>
 
+    <div id="deleteOverlay" class="edit-overlay" role="dialog" aria-label="Confirm delete" aria-modal="true" onclick="if(event.target===this)closeDelete()">
+        <div class="edit-modal">
+            <h3>&##128465; Delete Todo</h3>
+            <p id="deleteMessage" style="margin:0 0 1.25rem;color:var(--gray-600)">Are you sure?</p>
+            <div class="actions">
+                <button type="button" class="btn btn-ghost" onclick="closeDelete()">Cancel</button>
+                <button type="button" class="btn btn-danger" id="deleteConfirmBtn" aria-label="Confirm delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        var pendingDeleteId = null;
+
+        function openDelete(id, title) {
+            pendingDeleteId = id;
+            document.getElementById('deleteMessage').textContent = 'Are you sure you want to delete "' + title + '"?';
+            document.getElementById('deleteOverlay').classList.add('active');
+            document.getElementById('deleteConfirmBtn').focus();
+        }
+        function closeDelete() {
+            pendingDeleteId = null;
+            document.getElementById('deleteOverlay').classList.remove('active');
+        }
+        document.getElementById('deleteConfirmBtn').addEventListener('click', function() {
+            if (pendingDeleteId) {
+                document.getElementById('deleteForm-' + pendingDeleteId).submit();
+            }
+        });
+
         function openEdit(id, title) {
             document.getElementById('editTodoId').value = id;
             document.getElementById('editTitle').value = title;
@@ -130,7 +158,7 @@
             document.getElementById('editOverlay').classList.remove('active');
         }
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeEdit();
+            if (e.key === 'Escape') { closeEdit(); closeDelete(); }
         });
     </script>
 </body>
