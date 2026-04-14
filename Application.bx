@@ -69,9 +69,16 @@ class {
      * @targetPage The requested page
      */
     public boolean function onRequestStart( string targetPage ) {
-        // Pages that don't require authentication
-        var publicPages = [ "/pages/login.bxm", "/index.bxm" ]
         var currentPage = arguments.targetPage
+
+        // Block direct access to handlers and services
+        if ( currentPage.findNoCase( "/handlers/" ) > 0 || currentPage.findNoCase( "/services/" ) > 0 ) {
+            include "/pages/404.bxm"
+            return false
+        }
+
+        // Pages that don't require authentication
+        var publicPages = [ "/pages/login.bxm", "/index.bxm", "/pages/404.bxm" ]
 
         // If user is not logged in and requesting a protected page, redirect to login
         if ( !structKeyExists( session, "isLoggedIn" ) || !session.isLoggedIn ) {
@@ -104,5 +111,7 @@ class {
      * @template
      */
     public boolean function onMissingTemplate( template ) {
+        include "/pages/404.bxm"
+        return true
     }
 }
