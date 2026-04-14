@@ -3,12 +3,12 @@
    ========================================================================== */
 
 :root {
-    --primary: #5ba4cf;
-    --primary-hover: #4a93be;
+    --primary: #2786bd;
+    --primary-hover: #50a5d6;
     --primary-light: #e8f4fa;
     --success: #6abf69;
     --success-bg: #e8f5e8;
-    --danger: #cf5b5b;
+    --danger: #cb4646;
     --danger-hover: #b94a4a;
     --danger-bg: #fdeaea;
     --gray-50: #f7f8fa;
@@ -57,8 +57,6 @@ body {
 }
 .btn-primary { background: var(--primary); color: var(--white); }
 .btn-primary:hover { background: var(--primary-hover); }
-.btn-danger { background: var(--danger); color: var(--white); }
-.btn-danger:hover { background: var(--danger-hover); }
 .btn-ghost {
     background: var(--gray-100);
     color: var(--gray-700);
@@ -308,6 +306,25 @@ body {
     padding: 0.15rem 0.45rem;
     cursor: pointer;
     border-radius: var(--radius);
+}
+.btn-edit {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    filter: none;
+}
+.btn-edit:hover { background: var(--primary-hover); }
+.btn-danger { background: var(--danger); color: var(--white); }
+.btn-danger:hover { background: var(--danger-hover); }
+.btn-edit,
+.btn-danger {
+    -webkit-text-fill-color: white;
+    -webkit-background-clip: unset;
+}
+.btn-edit span,
+.btn-danger span {
+    filter: grayscale(1) brightness(10);
+    display: inline-block;
 }
 
 /* ==========================================================================

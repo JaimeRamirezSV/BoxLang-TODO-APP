@@ -82,15 +82,15 @@
                         <span class="todo-date">#dateTimeFormat( todos.created_at, "MMM dd, yyyy" )#</span>
 
                         <div class="todo-actions">
-                            <button class="btn btn-sm btn-ghost"
+                            <button class="btn btn-sm btn-edit"
                                 onclick="openEdit(#todos.id#, '#encodeForHTML( todos.title )#')">
-                                &##9998;
+                                <span>&##9998;</span>
                             </button>
                             <form method="post" action="/pages/todos.bxm" style="display:inline"
                                   onsubmit="return confirm('Delete this todo?')">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="todoId" value="#todos.id#">
-                                <button type="submit" class="btn btn-danger btn-sm">&##128465;</button>
+                                <button type="submit" class="btn btn-danger btn-sm"><span>&##128465;</span></button>
                             </form>
                         </div>
                     </li>
